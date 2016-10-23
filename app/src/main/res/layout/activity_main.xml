@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="horizontal"
+    tools:context=".ui.activities.MainActivity">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivSquare"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/square"
+                android:layout_margin="10dp"/>
+
+
+            <ImageView
+                android:id="@+id/ivCircle"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/circle"
+                android:layout_margin="10dp"/>
+
+            <ImageView
+                android:id="@+id/ivTriangle"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/triangle"
+                android:layout_margin="10dp"/>
+
+            <ImageView
+                android:id="@+id/ivRectangle"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rectangle"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvChoose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/pbScore"
+            android:textColor="@color/black"
+            android:text="  0 points!"/>
+
+        <ProgressBar
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/pbScore"
+            android:layout_width="10dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.ProgressBar.Vertical"/>
+    </RelativeLayout>
+</LinearLayout>

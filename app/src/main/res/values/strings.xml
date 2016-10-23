@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Game</string>
+
+    <string name="square">Square</string>
+    <string name="circle">Circle</string>
+    <string name="triangle">Triangle</string>
+    <string name="rectangle">Rectangle</string>
+
+    <string name="choose">Choose the</string>
+    <string name="great">GREAT!</string>
+    <string name="score">You got %1$d/20 questions!</string>
+    <string name="reset">Reset</string>
+    <string name="points">%1$d points!</string>
+</resources>
