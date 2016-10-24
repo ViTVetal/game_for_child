@@ -1,28 +1,24 @@
 package demo.none.game.ui.activities;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -74,6 +70,8 @@ public class MainActivity extends Activity {
                         showAnswer();
                     }
                 } else {
+                    soundGreatJob(MainActivity.this);
+
                     if(attempt == 0)
                         score++;
 
@@ -82,9 +80,27 @@ public class MainActivity extends Activity {
                         tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
                     else
                         tvScore.setText(String.format(getResources().getString(R.string.points), score));
-                    pbScore.setProgress(score * 5);
+                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
+                    animation.setDuration(500); // 0.5 second
+                    animation.setInterpolator(new DecelerateInterpolator());
+                    animation.start();
+                 //   pbScore.setProgress(score * 5);
                     clearFilters();
-                    play();
+                    if(runnable != null)
+                        runnable.killRunnable();
+                    soundGreatJob(MainActivity.this);
+                    ivCircle.setImageDrawable(getResources().getDrawable(R.drawable.circle_correct));
+                    disableImages();
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            reloadImages();
+                            play();
+                        }
+                    }, 2000);
+
                 }
             }
         });
@@ -102,6 +118,8 @@ public class MainActivity extends Activity {
                         showAnswer();
                     }
                 } else {
+                    soundGreatJob(MainActivity.this);
+
                     if(attempt == 0)
                         score++;
 
@@ -110,9 +128,25 @@ public class MainActivity extends Activity {
                         tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
                     else
                         tvScore.setText(String.format(getResources().getString(R.string.points), score));
-                    pbScore.setProgress(score * 5);
+
+                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
+                    animation.setDuration(500); // 0.5 second
+                    animation.setInterpolator(new DecelerateInterpolator());
+                    animation.start();
+                   // pbScore.setProgress(score * 5);
                     clearFilters();
-                    play();
+                    if(runnable != null)
+                        runnable.killRunnable();
+                    ivTriangle.setImageDrawable(getResources().getDrawable(R.drawable.triangle_correct));
+                    disableImages();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            reloadImages();
+                            play();
+                        }
+                    }, 2000);
                 }
             }
         });
@@ -130,6 +164,8 @@ public class MainActivity extends Activity {
                         showAnswer();
                     }
                 } else {
+                    soundGreatJob(MainActivity.this);
+
                     if(attempt == 0)
                         score++;
 
@@ -138,9 +174,25 @@ public class MainActivity extends Activity {
                         tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
                     else
                         tvScore.setText(String.format(getResources().getString(R.string.points), score));
-                    pbScore.setProgress(score * 5);
+
+                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
+                    animation.setDuration(500); // 0.5 second
+                    animation.setInterpolator(new DecelerateInterpolator());
+                    animation.start();
+                   // pbScore.setProgress(score * 5);
                     clearFilters();
-                    play();
+                    if(runnable != null)
+                        runnable.killRunnable();
+                    ivRectangle.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_correct));
+                    disableImages();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            reloadImages();
+                            play();
+                        }
+                    }, 2000);
                 }
             }
         });
@@ -158,6 +210,8 @@ public class MainActivity extends Activity {
                         showAnswer();
                     }
                 } else {
+                    soundGreatJob(MainActivity.this);
+
                     if(attempt == 0)
                         score++;
 
@@ -166,9 +220,25 @@ public class MainActivity extends Activity {
                         tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
                     else
                         tvScore.setText(String.format(getResources().getString(R.string.points), score));
-                    pbScore.setProgress(score * 5);
+
+                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
+                    animation.setDuration(500); // 0.5 second
+                    animation.setInterpolator(new DecelerateInterpolator());
+                    animation.start();
+                   // pbScore.setProgress(score * 5);
                     clearFilters();
-                    play();
+                    if(runnable != null)
+                        runnable.killRunnable();
+                    ivSquare.setImageDrawable(getResources().getDrawable(R.drawable.square_correct));
+                    disableImages();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            reloadImages();
+                            play();
+                        }
+                    }, 2000);
                 }
             }
         });
@@ -196,7 +266,7 @@ public class MainActivity extends Activity {
 
             runnable = new MyRunnable();
 
-            handler.postDelayed(runnable, 20000);
+            handler.postDelayed(runnable, 10000);
 
             Random random = new Random();
             currentPosition = random.nextInt(4);
@@ -215,19 +285,9 @@ public class MainActivity extends Activity {
         if(mp != null)
             mp.release();
 
-        if(counter > 0) {
-            soundGreatJob(MainActivity.this);
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    mp = MediaPlayer.create(ctx, shapes.get(currentPosition).getSound());
-                    mp.start();
-                }
-            });
-        } else {
-            mp = MediaPlayer.create(ctx, shapes.get(currentPosition).getSound());
-            mp.start();
-        }
+        mp = MediaPlayer.create(ctx, shapes.get(currentPosition).getSound());
+        mp.start();
+
     }
 
     private void soundGreatJob(Context ctx) {
@@ -251,14 +311,53 @@ public class MainActivity extends Activity {
         else if (currentPosition == 2)
             ivTriangle.startAnimation(shake);
         else
-            ivRectangle.startAnimation(shake);;
+            ivRectangle.startAnimation(shake);
     }
+
+    private void showAnswerInfinit() {
+        Animation shake = AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake_continuously);
+        if(currentPosition == 0)
+            ivSquare.startAnimation(shake);
+        else if(currentPosition == 1)
+            ivCircle.startAnimation(shake);
+        else if (currentPosition == 2)
+            ivTriangle.startAnimation(shake);
+        else
+            ivRectangle.startAnimation(shake);
+    }
+
+
 
     private void clearFilters() {
         ivRectangle.setColorFilter(null);
         ivTriangle.setColorFilter(null);
         ivCircle.setColorFilter(null);
         ivSquare.setColorFilter(null);
+
+
+        ivRectangle.setAnimation(null);
+        ivTriangle.setAnimation(null);
+        ivCircle.setAnimation(null);
+        ivSquare.setAnimation(null);
+    }
+
+    private void reloadImages() {
+        ivRectangle.setImageDrawable(getResources().getDrawable(R.drawable.rectangle));
+        ivTriangle.setImageDrawable(getResources().getDrawable(R.drawable.triangle));
+        ivCircle.setImageDrawable(getResources().getDrawable(R.drawable.circle));
+        ivSquare.setImageDrawable(getResources().getDrawable(R.drawable.square));
+
+        ivRectangle.setEnabled(true);
+        ivTriangle.setEnabled(true);
+        ivCircle.setEnabled(true);
+        ivSquare.setEnabled(true);
+    }
+
+    private void disableImages() {
+        ivRectangle.setEnabled(false);
+        ivTriangle.setEnabled(false);
+        ivCircle.setEnabled(false);
+        ivSquare.setEnabled(false);
     }
 
     public class MyRunnable implements Runnable {
@@ -268,7 +367,7 @@ public class MainActivity extends Activity {
             if(killMe)
                 return;
 
-            showAnswer();
+            showAnswerInfinit();
         }
 
         private void killRunnable() {
