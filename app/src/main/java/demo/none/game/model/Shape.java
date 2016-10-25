@@ -6,6 +6,8 @@ package demo.none.game.model;
 public abstract class Shape {
     protected String name;
     protected int sound;
+    protected int image;
+    protected int imageCorrect;
     protected int position;
 
     public String getName() {
@@ -22,6 +24,22 @@ public abstract class Shape {
 
     public void setSoundPath(int soundPath) {
         this.sound = sound;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public int getImageCorrect() {
+        return imageCorrect;
+    }
+
+    public void setImageCorrect(int imageCorrect) {
+        this.imageCorrect = imageCorrect;
     }
 
     public int getPosition() {

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +32,7 @@ import demo.none.game.model.Square;
 import demo.none.game.model.Triangle;
 
 public class MainActivity extends Activity {
-    private ImageView ivSquare, ivCircle, ivTriangle, ivRectangle;
+    private ImageView ivFirst, ivSecond, ivThird, ivFourth;
     private TextView tvChoose, tvScore;
     private ProgressBar pbScore;
     private int currentPosition;
@@ -57,21 +58,23 @@ public class MainActivity extends Activity {
         tvChoose = (TextView) findViewById(R.id.tvChoose);
         tvScore = (TextView) findViewById(R.id.tvScore);
 
-        ivCircle = (ImageView) findViewById(R.id.ivCircle);
-        ivCircle.setOnClickListener(new View.OnClickListener() {
+        ivFirst = (ImageView) findViewById(R.id.ivFirst);
+        ivFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(shapes.get(currentPosition) instanceof Circle)) {
+                if(currentPosition != 0) {
                     attempt++;
                     if(attempt < 2)
-                        setWrong(ivCircle);
+                        setWrong(ivFirst);
                     else {
-                        setWrong(ivCircle);
+                        setWrong(ivFirst);
                         showAnswer();
                     }
                 } else {
-                    soundGreatJob(MainActivity.this);
+                    if(runnable != null)
+                        runnable.killRunnable();
 
+                    soundGreatJob(MainActivity.this);
                     if(attempt == 0)
                         score++;
 
@@ -86,10 +89,7 @@ public class MainActivity extends Activity {
                     animation.start();
                  //   pbScore.setProgress(score * 5);
                     clearFilters();
-                    if(runnable != null)
-                        runnable.killRunnable();
-                    soundGreatJob(MainActivity.this);
-                    ivCircle.setImageDrawable(getResources().getDrawable(R.drawable.circle_correct));
+                    ivFirst.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
                     disableImages();
 
                     Handler handler = new Handler();
@@ -104,20 +104,23 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        ivTriangle = (ImageView) findViewById(R.id.ivTriangle);
-        ivTriangle.setOnClickListener(new View.OnClickListener() {
+        ivSecond = (ImageView) findViewById(R.id.ivSecond);
+        ivSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(shapes.get(currentPosition) instanceof Triangle)) {
+                if(currentPosition != 1) {
                     attempt++;
 
                     if(attempt < 2)
-                        setWrong(ivTriangle);
+                        setWrong(ivSecond);
                     else {
-                        setWrong(ivTriangle);
+                        setWrong(ivSecond);
                         showAnswer();
                     }
                 } else {
+                    if(runnable != null)
+                        runnable.killRunnable();
+
                     soundGreatJob(MainActivity.this);
 
                     if(attempt == 0)
@@ -135,9 +138,7 @@ public class MainActivity extends Activity {
                     animation.start();
                    // pbScore.setProgress(score * 5);
                     clearFilters();
-                    if(runnable != null)
-                        runnable.killRunnable();
-                    ivTriangle.setImageDrawable(getResources().getDrawable(R.drawable.triangle_correct));
+                    ivSecond.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
                     disableImages();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -150,20 +151,23 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        ivRectangle = (ImageView) findViewById(R.id.ivRectangle);
-        ivRectangle.setOnClickListener(new View.OnClickListener() {
+        ivThird = (ImageView) findViewById(R.id.ivThird);
+        ivThird.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(shapes.get(currentPosition) instanceof Rectangle)) {
+                if(currentPosition != 2) {
                     attempt++;
 
                     if(attempt < 2)
-                        setWrong(ivRectangle);
+                        setWrong(ivThird);
                     else {
-                        setWrong(ivRectangle);
+                        setWrong(ivThird);
                         showAnswer();
                     }
                 } else {
+                    if(runnable != null)
+                        runnable.killRunnable();
+
                     soundGreatJob(MainActivity.this);
 
                     if(attempt == 0)
@@ -181,9 +185,7 @@ public class MainActivity extends Activity {
                     animation.start();
                    // pbScore.setProgress(score * 5);
                     clearFilters();
-                    if(runnable != null)
-                        runnable.killRunnable();
-                    ivRectangle.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_correct));
+                    ivThird.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
                     disableImages();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -196,20 +198,23 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        ivSquare = (ImageView) findViewById(R.id.ivSquare);
-        ivSquare.setOnClickListener(new View.OnClickListener() {
+        ivFourth = (ImageView) findViewById(R.id.ivFourth);
+        ivFourth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(shapes.get(currentPosition) instanceof Square)) {
+                if(currentPosition != 3) {
                     attempt++;
 
                     if(attempt < 2)
-                        setWrong(ivSquare);
+                        setWrong(ivFourth);
                     else {
-                        setWrong(ivSquare);
+                        setWrong(ivFourth);
                         showAnswer();
                     }
                 } else {
+                    if(runnable != null)
+                        runnable.killRunnable();
+
                     soundGreatJob(MainActivity.this);
 
                     if(attempt == 0)
@@ -227,9 +232,7 @@ public class MainActivity extends Activity {
                     animation.start();
                    // pbScore.setProgress(score * 5);
                     clearFilters();
-                    if(runnable != null)
-                        runnable.killRunnable();
-                    ivSquare.setImageDrawable(getResources().getDrawable(R.drawable.square_correct));
+                    ivFourth.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
                     disableImages();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -268,6 +271,9 @@ public class MainActivity extends Activity {
 
             handler.postDelayed(runnable, 10000);
 
+
+            randList();
+
             Random random = new Random();
             currentPosition = random.nextInt(4);
             Log.d("myLogs", currentPosition + " curren pos");
@@ -279,6 +285,16 @@ public class MainActivity extends Activity {
 
             counter++;
         }
+    }
+
+    private void randList() {
+        long seed = System.nanoTime();
+        Collections.shuffle(shapes, new Random(seed));
+
+        ivFirst.setImageDrawable(getResources().getDrawable(shapes.get(0).getImage()));
+        ivSecond.setImageDrawable(getResources().getDrawable(shapes.get(1).getImage()));
+        ivThird.setImageDrawable(getResources().getDrawable(shapes.get(2).getImage()));
+        ivFourth.setImageDrawable(getResources().getDrawable(shapes.get(3).getImage()));
     }
 
     private void sound(final Context ctx) {
@@ -305,59 +321,54 @@ public class MainActivity extends Activity {
     private void showAnswer() {
         Animation shake = AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake);
         if(currentPosition == 0)
-            ivSquare.startAnimation(shake);
+            ivFirst.startAnimation(shake);
         else if(currentPosition == 1)
-            ivCircle.startAnimation(shake);
+            ivSecond.startAnimation(shake);
         else if (currentPosition == 2)
-            ivTriangle.startAnimation(shake);
+            ivThird.startAnimation(shake);
         else
-            ivRectangle.startAnimation(shake);
+            ivFourth.startAnimation(shake);
     }
 
     private void showAnswerInfinit() {
         Animation shake = AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake_continuously);
         if(currentPosition == 0)
-            ivSquare.startAnimation(shake);
+            ivFirst.startAnimation(shake);
         else if(currentPosition == 1)
-            ivCircle.startAnimation(shake);
+            ivSecond.startAnimation(shake);
         else if (currentPosition == 2)
-            ivTriangle.startAnimation(shake);
+            ivThird.startAnimation(shake);
         else
-            ivRectangle.startAnimation(shake);
+            ivFourth.startAnimation(shake);
     }
 
 
 
     private void clearFilters() {
-        ivRectangle.setColorFilter(null);
-        ivTriangle.setColorFilter(null);
-        ivCircle.setColorFilter(null);
-        ivSquare.setColorFilter(null);
+        ivFirst.setColorFilter(null);
+        ivSecond.setColorFilter(null);
+        ivThird.setColorFilter(null);
+        ivFourth.setColorFilter(null);
 
 
-        ivRectangle.setAnimation(null);
-        ivTriangle.setAnimation(null);
-        ivCircle.setAnimation(null);
-        ivSquare.setAnimation(null);
+        ivFirst.setAnimation(null);
+        ivSecond.setAnimation(null);
+        ivThird.setAnimation(null);
+        ivFourth.setAnimation(null);
     }
 
     private void reloadImages() {
-        ivRectangle.setImageDrawable(getResources().getDrawable(R.drawable.rectangle));
-        ivTriangle.setImageDrawable(getResources().getDrawable(R.drawable.triangle));
-        ivCircle.setImageDrawable(getResources().getDrawable(R.drawable.circle));
-        ivSquare.setImageDrawable(getResources().getDrawable(R.drawable.square));
-
-        ivRectangle.setEnabled(true);
-        ivTriangle.setEnabled(true);
-        ivCircle.setEnabled(true);
-        ivSquare.setEnabled(true);
+        ivFirst.setEnabled(true);
+        ivSecond.setEnabled(true);
+        ivThird.setEnabled(true);
+        ivFourth.setEnabled(true);
     }
 
     private void disableImages() {
-        ivRectangle.setEnabled(false);
-        ivTriangle.setEnabled(false);
-        ivCircle.setEnabled(false);
-        ivSquare.setEnabled(false);
+        ivFirst.setEnabled(false);
+        ivSecond.setEnabled(false);
+        ivThird.setEnabled(false);
+        ivFourth.setEnabled(false);
     }
 
     public class MyRunnable implements Runnable {

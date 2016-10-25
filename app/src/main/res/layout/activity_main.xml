@@ -22,28 +22,24 @@
             android:layout_marginTop="40dp">
 
             <ImageView
-                android:id="@+id/ivSquare"
+                android:id="@+id/ivFirst"
                 android:layout_width="115dp"
-                android:layout_height="115dp"
-                android:src="@drawable/square" />
+                android:layout_height="115dp" />
 
             <ImageView
-                android:id="@+id/ivCircle"
+                android:id="@+id/ivSecond"
                 android:layout_width="115dp"
-                android:layout_height="115dp"
-                android:src="@drawable/circle" />
+                android:layout_height="115dp" />
 
             <ImageView
-                android:id="@+id/ivTriangle"
+                android:id="@+id/ivThird"
                 android:layout_width="115dp"
-                android:layout_height="115dp"
-                android:src="@drawable/triangle" />
+                android:layout_height="115dp" />
 
             <ImageView
-                android:id="@+id/ivRectangle"
+                android:id="@+id/ivFourth"
                 android:layout_width="115dp"
-                android:layout_height="115dp"
-                android:src="@drawable/rectangle" />
+                android:layout_height="115dp" />
 
         </LinearLayout>
 

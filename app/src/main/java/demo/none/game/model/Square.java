@@ -14,6 +14,8 @@ public class Square extends Shape {
 
         name = this.context.getResources().getString(R.string.square);
         sound = R.raw.square;
+        image = R.drawable.square;
+        imageCorrect = R.drawable.square_correct;
         position = 0;
     }
 }
