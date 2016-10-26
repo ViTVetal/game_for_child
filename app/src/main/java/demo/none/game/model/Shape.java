@@ -7,8 +7,6 @@ public abstract class Shape {
     protected String name;
     protected int sound;
     protected int image;
-    protected int imageCorrect;
-    protected int position;
 
     public String getName() {
         return name;
@@ -32,21 +30,5 @@ public abstract class Shape {
 
     public void setImage(int image) {
         this.image = image;
-    }
-
-    public int getImageCorrect() {
-        return imageCorrect;
-    }
-
-    public void setImageCorrect(int imageCorrect) {
-        this.imageCorrect = imageCorrect;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
     }
 }

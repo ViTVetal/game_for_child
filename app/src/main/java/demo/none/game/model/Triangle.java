@@ -15,7 +15,5 @@ public class Triangle extends Shape {
         name = this.context.getResources().getString(R.string.triangle);
         sound = R.raw.triangle;
         image = R.drawable.triangle;
-        imageCorrect = R.drawable.triangle_correct;
-        position = 2;
     }
 }

@@ -15,7 +15,5 @@ public class Circle extends Shape {
         name = this.context.getResources().getString(R.string.circle);
         sound = R.raw.circle;
         image = R.drawable.circle;
-        imageCorrect = R.drawable.circle_correct;
-        position = 1;
     }
 }

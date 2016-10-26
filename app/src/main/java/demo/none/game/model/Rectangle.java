@@ -15,7 +15,5 @@ public class Rectangle extends Shape {
         name = this.context.getResources().getString(R.string.rectangle);
         sound = R.raw.rectangle;
         image = R.drawable.rectangle;
-        imageCorrect = R.drawable.rectangle_correct;
-        position = 3;
     }
 }

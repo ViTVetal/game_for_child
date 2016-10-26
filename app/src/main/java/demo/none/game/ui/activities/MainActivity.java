@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -41,7 +43,9 @@ public class MainActivity extends Activity {
     private int counter = 0;
     private int score = 0;
     private int attempt = 0;
-    private MyRunnable runnable;
+    private AnswerRunnable runnable;
+
+    private static final int DELAY_TO_ANSWER = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,193 +66,86 @@ public class MainActivity extends Activity {
         ivFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentPosition != 0) {
-                    attempt++;
-                    if(attempt < 2)
-                        setWrong(ivFirst);
-                    else {
-                        setWrong(ivFirst);
-                        showAnswer();
-                    }
-                } else {
-                    if(runnable != null)
-                        runnable.killRunnable();
-
-                    soundGreatJob(MainActivity.this);
-                    if(attempt == 0)
-                        score++;
-
-                    attempt = 0;
-                    if(score < 10)
-                        tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
-                    else
-                        tvScore.setText(String.format(getResources().getString(R.string.points), score));
-                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
-                    animation.setDuration(500); // 0.5 second
-                    animation.setInterpolator(new DecelerateInterpolator());
-                    animation.start();
-                 //   pbScore.setProgress(score * 5);
-                    clearFilters();
-                    ivFirst.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
-                    disableImages();
-
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            reloadImages();
-                            play();
-                        }
-                    }, 2000);
-
-                }
+                clickImageEvent(ivFirst, 0);
             }
         });
+
         ivSecond = (ImageView) findViewById(R.id.ivSecond);
         ivSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentPosition != 1) {
-                    attempt++;
-
-                    if(attempt < 2)
-                        setWrong(ivSecond);
-                    else {
-                        setWrong(ivSecond);
-                        showAnswer();
-                    }
-                } else {
-                    if(runnable != null)
-                        runnable.killRunnable();
-
-                    soundGreatJob(MainActivity.this);
-
-                    if(attempt == 0)
-                        score++;
-
-                    attempt = 0;
-                    if(score < 10)
-                        tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
-                    else
-                        tvScore.setText(String.format(getResources().getString(R.string.points), score));
-
-                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
-                    animation.setDuration(500); // 0.5 second
-                    animation.setInterpolator(new DecelerateInterpolator());
-                    animation.start();
-                   // pbScore.setProgress(score * 5);
-                    clearFilters();
-                    ivSecond.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
-                    disableImages();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            reloadImages();
-                            play();
-                        }
-                    }, 2000);
-                }
+                clickImageEvent(ivSecond, 1);
             }
         });
+
         ivThird = (ImageView) findViewById(R.id.ivThird);
         ivThird.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentPosition != 2) {
-                    attempt++;
-
-                    if(attempt < 2)
-                        setWrong(ivThird);
-                    else {
-                        setWrong(ivThird);
-                        showAnswer();
-                    }
-                } else {
-                    if(runnable != null)
-                        runnable.killRunnable();
-
-                    soundGreatJob(MainActivity.this);
-
-                    if(attempt == 0)
-                        score++;
-
-                    attempt = 0;
-                    if(score < 10)
-                        tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
-                    else
-                        tvScore.setText(String.format(getResources().getString(R.string.points), score));
-
-                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
-                    animation.setDuration(500); // 0.5 second
-                    animation.setInterpolator(new DecelerateInterpolator());
-                    animation.start();
-                   // pbScore.setProgress(score * 5);
-                    clearFilters();
-                    ivThird.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
-                    disableImages();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            reloadImages();
-                            play();
-                        }
-                    }, 2000);
-                }
+                clickImageEvent(ivThird, 2);
             }
         });
+
         ivFourth = (ImageView) findViewById(R.id.ivFourth);
         ivFourth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentPosition != 3) {
-                    attempt++;
-
-                    if(attempt < 2)
-                        setWrong(ivFourth);
-                    else {
-                        setWrong(ivFourth);
-                        showAnswer();
-                    }
-                } else {
-                    if(runnable != null)
-                        runnable.killRunnable();
-
-                    soundGreatJob(MainActivity.this);
-
-                    if(attempt == 0)
-                        score++;
-
-                    attempt = 0;
-                    if(score < 10)
-                        tvScore.setText("  " + String.format(getResources().getString(R.string.points), score));
-                    else
-                        tvScore.setText(String.format(getResources().getString(R.string.points), score));
-
-                    ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
-                    animation.setDuration(500); // 0.5 second
-                    animation.setInterpolator(new DecelerateInterpolator());
-                    animation.start();
-                   // pbScore.setProgress(score * 5);
-                    clearFilters();
-                    ivFourth.setImageDrawable(getResources().getDrawable(shapes.get(currentPosition).getImageCorrect()));
-                    disableImages();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            reloadImages();
-                            play();
-                        }
-                    }, 2000);
-                }
+                clickImageEvent(ivFourth, 3);
             }
         });
 
         pbScore = (ProgressBar) findViewById(R.id.pbScore);
 
         play();
+    }
+
+    private void clickImageEvent(ImageView iv, int position) {
+        if(currentPosition != position) {
+            attempt++;
+            if(attempt < 2)
+                setWrong(iv);
+            else {
+                setWrong(iv);
+                showAnswer();
+            }
+        } else {
+            if(runnable != null)
+                runnable.killRunnable();
+
+            soundGreatJob(MainActivity.this);
+
+            if(attempt == 0)
+                score++;
+
+            attempt = 0;
+
+            tvScore.setText(String.format(getResources().getString(R.string.points), score));
+
+            ObjectAnimator animation = ObjectAnimator.ofInt(pbScore, "progress", score * 5);
+            animation.setDuration(500);
+            animation.setInterpolator(new DecelerateInterpolator());
+            animation.start();
+
+            clearFilters();
+
+            Drawable[] layers = new Drawable[2];
+            layers[0] = ContextCompat.getDrawable(this, R.drawable.halo);
+            layers[1] = ContextCompat.getDrawable(this, shapes.get(currentPosition).getImage());
+            LayerDrawable layerDrawable = new LayerDrawable(layers);
+            iv.setImageDrawable(layerDrawable);
+
+            disableImages();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    reloadImages();
+                    play();
+                }
+            }, 2000);
+
+        }
     }
 
     private void play() {
@@ -267,16 +164,14 @@ public class MainActivity extends Activity {
             if(runnable != null)
                 runnable.killRunnable();
 
-            runnable = new MyRunnable();
+            runnable = new AnswerRunnable();
 
-            handler.postDelayed(runnable, 10000);
-
+            handler.postDelayed(runnable, DELAY_TO_ANSWER);
 
             randList();
 
             Random random = new Random();
             currentPosition = random.nextInt(4);
-            Log.d("myLogs", currentPosition + " curren pos");
 
             String chooseTitle = getResources().getString(R.string.choose) + " "
                     + shapes.get(currentPosition).getName() + "!";
@@ -291,10 +186,10 @@ public class MainActivity extends Activity {
         long seed = System.nanoTime();
         Collections.shuffle(shapes, new Random(seed));
 
-        ivFirst.setImageDrawable(getResources().getDrawable(shapes.get(0).getImage()));
-        ivSecond.setImageDrawable(getResources().getDrawable(shapes.get(1).getImage()));
-        ivThird.setImageDrawable(getResources().getDrawable(shapes.get(2).getImage()));
-        ivFourth.setImageDrawable(getResources().getDrawable(shapes.get(3).getImage()));
+        ivFirst.setImageDrawable(ContextCompat.getDrawable(this, shapes.get(0).getImage()));
+        ivSecond.setImageDrawable(ContextCompat.getDrawable(this, shapes.get(1).getImage()));
+        ivThird.setImageDrawable(ContextCompat.getDrawable(this, shapes.get(2).getImage()));
+        ivFourth.setImageDrawable(ContextCompat.getDrawable(this, shapes.get(3).getImage()));
     }
 
     private void sound(final Context ctx) {
@@ -330,7 +225,7 @@ public class MainActivity extends Activity {
             ivFourth.startAnimation(shake);
     }
 
-    private void showAnswerInfinit() {
+    private void showAnswerInfinitely() {
         Animation shake = AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake_continuously);
         if(currentPosition == 0)
             ivFirst.startAnimation(shake);
@@ -371,19 +266,18 @@ public class MainActivity extends Activity {
         ivFourth.setEnabled(false);
     }
 
-    public class MyRunnable implements Runnable {
+    public class AnswerRunnable implements Runnable {
         private boolean killMe = false;
 
         public void run() {
             if(killMe)
                 return;
 
-            showAnswerInfinit();
+            showAnswerInfinitely();
         }
 
         private void killRunnable() {
             killMe = true;
         }
     }
-
 }
