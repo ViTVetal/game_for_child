@@ -11,4 +11,5 @@
     <string name="score">You got %1$d/20 questions!</string>
     <string name="reset">Reset</string>
     <string name="points">%1$d points!</string>
+    <string name="errors">Errors:</string>
 </resources>

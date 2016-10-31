@@ -23,6 +23,7 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -44,6 +45,8 @@ public class MainActivity extends Activity {
     private int score = 0;
     private int attempt = 0;
     private AnswerRunnable runnable;
+    private RepeatQuestionRunnable questionRunnable;
+    private HashMap<String, Integer> wrongAnswers;
 
     private static final int DELAY_TO_ANSWER = 10000;
 
@@ -96,6 +99,8 @@ public class MainActivity extends Activity {
 
         pbScore = (ProgressBar) findViewById(R.id.pbScore);
 
+        wrongAnswers = new HashMap<>();
+
         play();
     }
 
@@ -112,10 +117,21 @@ public class MainActivity extends Activity {
             if(runnable != null)
                 runnable.killRunnable();
 
+            if(questionRunnable != null)
+                questionRunnable.killRunnable();
+
             soundGreatJob(MainActivity.this);
 
             if(attempt == 0)
                 score++;
+            else {
+                Integer quantity = wrongAnswers.get(shapes.get(currentPosition).getName());
+
+                if(quantity == null)
+                    wrongAnswers.put(shapes.get(currentPosition).getName(), 1);
+                else
+                    wrongAnswers.put(shapes.get(currentPosition).getName(), quantity + 1);
+            }
 
             attempt = 0;
 
@@ -153,8 +169,12 @@ public class MainActivity extends Activity {
             if(runnable != null)
                 runnable.killRunnable();
 
+            if(questionRunnable != null)
+                questionRunnable.killRunnable();
+
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("score", score);
+            intent.putExtra("wrongAnswers", wrongAnswers);
             startActivity(intent);
             finish();
         } else {
@@ -167,6 +187,13 @@ public class MainActivity extends Activity {
             runnable = new AnswerRunnable();
 
             handler.postDelayed(runnable, DELAY_TO_ANSWER);
+
+            if(questionRunnable != null)
+                questionRunnable.killRunnable();
+
+            questionRunnable = new RepeatQuestionRunnable();
+
+            handler.postDelayed(questionRunnable, 5000);
 
             randList();
 
@@ -198,7 +225,6 @@ public class MainActivity extends Activity {
 
         mp = MediaPlayer.create(ctx, shapes.get(currentPosition).getSound());
         mp.start();
-
     }
 
     private void soundGreatJob(Context ctx) {
@@ -237,14 +263,11 @@ public class MainActivity extends Activity {
             ivFourth.startAnimation(shake);
     }
 
-
-
     private void clearFilters() {
         ivFirst.setColorFilter(null);
         ivSecond.setColorFilter(null);
         ivThird.setColorFilter(null);
         ivFourth.setColorFilter(null);
-
 
         ivFirst.setAnimation(null);
         ivSecond.setAnimation(null);
@@ -274,6 +297,23 @@ public class MainActivity extends Activity {
                 return;
 
             showAnswerInfinitely();
+            attempt++;
+        }
+
+        private void killRunnable() {
+            killMe = true;
+        }
+    }
+
+    public class RepeatQuestionRunnable implements Runnable {
+        private boolean killMe = false;
+
+        public void run() {
+            if(killMe)
+                return;
+
+            sound(MainActivity.this);
+            attempt++;
         }
 
         private void killRunnable() {

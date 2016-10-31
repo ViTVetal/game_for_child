@@ -10,40 +10,47 @@
     android:background="@color/gray"
     tools:context=".ui.activities.MainActivity">
 
-
-    <View
-        android:id="@+id/placeholder"
+    <ScrollView
+        android:id="@+id/svWrongShapes"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_centerInParent="true"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/tvGreat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:textColor="@color/black"
-            android:text="@string/great"
-            android:textSize="25sp"
-            android:layout_above="@id/placeholder"
-            android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/tvGreat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:textColor="@color/black"
+                android:text="@string/great"
+                android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/tvScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            android:layout_below="@id/placeholder"
-            android:layout_centerHorizontal="true"/>
+            <LinearLayout
+                android:id="@+id/llWrongShapes"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"/>
+        </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reset"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:onClick="onClickReset"/>
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickReset"/>
 </RelativeLayout>
