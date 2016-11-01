@@ -12,4 +12,9 @@
     <string name="reset">Reset</string>
     <string name="points">%1$d points!</string>
     <string name="errors">Errors:</string>
+    <string name="send_logs">Send logs</string>
+    <string name="send_email">Send email…</string>
+    <string name="sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>

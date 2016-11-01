@@ -8,9 +8,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,7 +24,17 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +62,8 @@ public class MainActivity extends Activity {
     private HashMap<String, Integer> wrongAnswers;
 
     private static final int DELAY_TO_ANSWER = 10000;
+
+    private static final String LOG_FILE_NAME = "log_file.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +177,18 @@ public class MainActivity extends Activity {
             }, 2000);
 
         }
+
+        FileOutputStream outputStream;
+        try {
+            outputStream = openFileOutput(LOG_FILE_NAME, Context.MODE_APPEND);
+            outputStream.write((Calendar.getInstance().getTimeInMillis() + "\t" +
+                    "question_" + shapes.get(currentPosition).getName() +
+                    ":clicked_"+ shapes.get(position).getName() + "\n").getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            Log.d("myLogs", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void play() {
@@ -204,6 +231,18 @@ public class MainActivity extends Activity {
                     + shapes.get(currentPosition).getName() + "!";
             tvChoose.setText(chooseTitle);
             sound(this);
+
+            FileOutputStream outputStream;
+            try {
+                outputStream = openFileOutput(LOG_FILE_NAME, Context.MODE_APPEND);
+                outputStream.write((Calendar.getInstance().getTimeInMillis() + "\t" +
+                                "question_" + shapes.get(currentPosition).getName() +
+                                ":question_presented\n").getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                Log.d("myLogs", e.getMessage());
+                e.printStackTrace();
+            }
 
             counter++;
         }
@@ -313,7 +352,6 @@ public class MainActivity extends Activity {
                 return;
 
             sound(MainActivity.this);
-            attempt++;
         }
 
         private void killRunnable() {
